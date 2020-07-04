@@ -1,5 +1,6 @@
 ### Date created
 Include the date you created this project and README file.
+This project was created on 7/4/2020 as well as the README file 
 
 ### Project Title
 Replace the Project Title
