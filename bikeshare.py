@@ -119,15 +119,18 @@ def time_stats(df ,month,day):
     start_time = time.time()
 
     # TO DO: display the most common month
+    # if users chooses all months calculate the most popular month and display it
     if month.title() == 'All':
         most_common_month = df['month'].mode()[0]
         #convert month number into month name:
+        #iterate through the dictionary and break when y is equal to the most_common_month
         dict_m = {'January' : 1, 'February' : 2, 'March' : 3, 'April' : 4, 'May' : 5, 'June' : 6  ,'July' : 7 ,'August' : 8 , 'September' : 9 , 'October' : 10 , 'November' : 11 , 'December' : 12}
         for x , y in dict_m.items():
             if y == most_common_month:
                 break
         print('The most common month is: ' , x)
     else:
+        #if the month is equal to other than all then show data for that month only.
         print('Data will be shown for ', month.title())
 
 
@@ -200,9 +203,11 @@ def user_stats(df):
     print('counts of user types \n',user_types_counts)
 
     # TO DO: Display counts of gender
+    #display the gender count for the respective data
     try:
         gender_count = df['Gender'].value_counts()
         print('counts of gender is ' ,gender_count)
+    # if gender column not present then display no gender data.
     except:
         print('No data for gender counts for this city')
 
