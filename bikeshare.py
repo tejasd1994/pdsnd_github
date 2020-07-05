@@ -243,6 +243,7 @@ def main():
             if Answer == "yes":
                 print(df[z:z+5])
                 z = z + 5
+            #if no then do not display next 5 lines display the string "OK"
             else:
                 print("Ok")
                 break
