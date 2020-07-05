@@ -28,10 +28,10 @@ def get_filters():
                 print("Get ready to choose the month for which data is needed")
             else:
                 print("Please enter the city name correctly again")
-                
-            
-            
-            
+
+
+
+
 
     # TO DO: get user input for month (all, january, february, ... , june)
     while True:
@@ -45,14 +45,14 @@ def get_filters():
                 print("Get ready to choose the day of the week")
             else:
                 print("The month you choose does not exist, Please try again")
-                  
 
-    
-    
+
+
+
     # TO DO: get user input for day of week (all, monday, tuesday, ... sunday)
     while True:
         try:
-        
+
             day = input("Please enter the specified day for which you need data or select all  \n")
             if day.title() in ['Monday' , 'Tuesday' , 'Wednesday' , 'Thursday' , 'Friday' , 'Saturday' , 'Sunday' , 'All']:
                 print("Thanks for the day information, day selected is {}".format(day))
@@ -60,10 +60,10 @@ def get_filters():
         finally:
             if day.title() in ['Monday' , 'Tuesday' , 'Wednesday' , 'Thursday' , 'Friday' , 'Saturday' , 'Sunday' , 'All']:
                 print("Thanks for the city , month and day data")
-            else:    
+            else:
                 print("The day you choose does not exist, Please enter again")
-                  
-    
+
+
     print('-'*40)
     return city, month, day
 
@@ -86,10 +86,10 @@ def load_data(city, month, day):
     df['Start Time'] =  pd.to_datetime(df['Start Time'])
  # extract month and day of week from Start Time to create new columns
     df['month'] = df['Start Time'].dt.month
-    df['day_of_week'] = df['Start Time'].dt.weekday_name   
-    
-    # if user selects all then dont use any filters , if user selects any month then use filter 
-    
+    df['day_of_week'] = df['Start Time'].dt.weekday_name
+
+    # if user selects all then dont use any filters , if user selects any month then use filter
+
     if month.title() == 'All':
         print('No month filter is applied')
     else:
@@ -97,21 +97,21 @@ def load_data(city, month, day):
         dict_m = {'January' : 1, 'February' : 2, 'March' : 3, 'April' : 4, 'May' : 5, 'June' : 6 ,'July' : 7 ,'August' : 8 , 'September' : 9 , 'October' : 10 , 'November' : 11 , 'December' : 12}
         # filter by month to create the new dataframe
         df = df[df.month ==  dict_m[month.title()]]
-            
-            
+
+
     # filter by day of week if applicable
     if day.title() == 'All':
         print('No day filter applied')
     else:
         # filter by day of week to create the new dataframe
         df = df[df.day_of_week == day.title()]
-    
+
     return df
-    
 
 
 
-    
+
+
 def time_stats(df ,month,day):
     """Displays statistics on the most frequent times of travel."""
 
@@ -119,17 +119,20 @@ def time_stats(df ,month,day):
     start_time = time.time()
 
     # TO DO: display the most common month
+    # if users chooses all months calculate the most popular month and display it
     if month.title() == 'All':
         most_common_month = df['month'].mode()[0]
         #convert month number into month name:
+        #iterate through the dictionary and break when y is equal to the most_common_month
         dict_m = {'January' : 1, 'February' : 2, 'March' : 3, 'April' : 4, 'May' : 5, 'June' : 6  ,'July' : 7 ,'August' : 8 , 'September' : 9 , 'October' : 10 , 'November' : 11 , 'December' : 12}
         for x , y in dict_m.items():
             if y == most_common_month:
                 break
-        print('The most common month is: ' , x)       
+        print('The most common month is: ' , x)
     else:
-        print('Data will be shown for ', month.title())            
-                
+        #if the month is equal to other than all then show data for that month only.
+        print('Data will be shown for ', month.title())
+
 
     # TO DO: display the most common day of week
     if day.title() == 'All':
@@ -158,15 +161,15 @@ def station_stats(df):
     print("most common start station is :", most_common_startst.index[0])
 
     # TO DO: display most commonly used end station
-    
+
     most_common_endst = df['End Station'].value_counts()
     print("most common end station is :", most_common_endst.index[0])
-    
-    
+
+
     # TO DO: display most frequent combination of start station and end station trip
     freq_comb_station = df['Start Station'] + "--" + df['End Station']
     print('frequent combination of station is : ' , freq_comb_station.mode()[0])
-   
+
 
     print("\nThis took %s seconds." % (time.time() - start_time))
     print('-'*40)
@@ -184,7 +187,7 @@ def trip_duration_stats(df):
     # TO DO: display mean travel time
     mean_travel_time = df['Trip Duration'].mean()
     print('The mean of travel time is : ' , mean_travel_time)
-    
+
     print("\nThis took %s seconds." % (time.time() - start_time))
     print('-'*40)
 
@@ -207,7 +210,7 @@ def user_stats(df):
         print('No data for gender counts for this city')
 
     # TO DO: Display earliest, most recent, and most common year of birth
-    #MOST COMMON YEAR OF BIRTH 
+    #MOST COMMON YEAR OF BIRTH
     try:
         common_year_birth = df['Birth Year'].mode()[0]
         print('Most common birth year is ' , common_year_birth)
@@ -219,7 +222,7 @@ def user_stats(df):
         print('Most recent birth year ' , recent_birth_year)
     except:
         print('No birth year data for this city')
-    #MOST EARLIEST BIRTH YEAR 
+    #MOST EARLIEST BIRTH YEAR
     try:
         earliest_birth_year = df['Birth Year'].min()
         print('Most earliest birth year ' , earliest_birth_year)
@@ -233,7 +236,7 @@ def user_stats(df):
 
 def main():
     while True:
-        z = 0 
+        z = 0
         city, month, day = get_filters()
         df = load_data(city, month, day)
         # Ask user for 5 lines of raw data until user says no.
@@ -241,7 +244,7 @@ def main():
             Answer = input('Would you like to see first 5 lines of raw data,enter yes or no: ')
             if Answer == "yes":
                 print(df[z:z+5])
-                z = z + 5 
+                z = z + 5
             else:
                 print("Ok")
                 break
@@ -250,11 +253,11 @@ def main():
         station_stats(df)
         trip_duration_stats(df)
         user_stats(df)
-           
+
         restart = input('\nWould you like to restart ? Enter yes or no. \n')
         if restart.lower() != 'yes':
             break
-            
+
 
 
 if __name__ == "__main__":
