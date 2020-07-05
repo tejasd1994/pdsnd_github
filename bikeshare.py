@@ -203,9 +203,11 @@ def user_stats(df):
     print('counts of user types \n',user_types_counts)
 
     # TO DO: Display counts of gender
+    #display the gender count for the respective data
     try:
         gender_count = df['Gender'].value_counts()
         print('counts of gender is ' ,gender_count)
+    # if gender column not present then display no gender data.    
     except:
         print('No data for gender counts for this city')
 
